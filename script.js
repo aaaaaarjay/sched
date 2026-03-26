@@ -1,4 +1,5 @@
 // Scheduler - Online Version (Google Sheets)
+// Scheduler - Online Version (Google Sheets)
 const SHEET_ID = '17cKxYPpqYT5AzzynZ4fdmx-bmtYNKwpn6R6dfb-GAQU'; // Replace with your Google Sheet ID
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwXjJNP2EDhIRwrvmEsdfRzcA5NyIlkeR3IG7KhHJXiFdo_TlJDTNCvFwRW8gIpKW43/exec'; // Replace with deployed GAS Web App URL
 
@@ -133,8 +134,7 @@ async function submitBooking() {
 }
 
 // ===== ADMIN FUNCTIONS =====
-function adminLogin() {
-    const password = document.getElementById('admin-password').value;
+
     if (password === '80BA3F306F97') {
         sessionStorage.setItem('adminLoggedIn', 'true');
         isAdmin = true;
@@ -146,7 +146,7 @@ function adminLogin() {
         document.getElementById('admin-login-error').style.display = 'block';
         setTimeout(() => document.getElementById('admin-login-error').style.display = 'none', 3000);
     }
-}
+
 
 function adminLogout() {
     isAdmin = false;
