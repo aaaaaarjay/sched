@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Scheduler</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="tool-container">
+        <header class="tool-header">
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Booking</a>
+            <h1><i class="fas fa-lock"></i> Admin Login</h1>
+            <p>Enter password to access admin dashboard</p>
+        </header>
+
+        <div class="view active" id="view-login">
+            <div class="auth-card">
+                <h2><i class="fas fa-key"></i> Secure Login</h2>
+                <div class="form-group">
+                    <label>Admin Password</label>
+                    <input type="password" id="admin-password" placeholder="admin123">
+                </div>
+    <div id="admin-login-error" class="error-msg" style="display:none;">❌ Incorrect password! Try 'admin123'</div>
+                <button class="action-btn btn-primary-full" onclick="adminLogin()">
+                    <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

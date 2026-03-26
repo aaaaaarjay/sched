@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Firebase Scheduler Demo</title>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+  <style>
+    body { font-family: Arial; max-width: 800px; margin: 50px auto; }
+    button { padding: 10px 20px; margin: 10px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+    #status { padding: 20px; background: #f0f0f0; margin: 20px 0; }
+    input { padding: 8px; width: 200px; }
+  </style>
+</head>
+<body>
+  <h1>🗓️ Firebase Scheduler (No CORS!)</h1>
+  <p>Create Firebase project → Realtime DB → replace config below → test!</p>
+  
+  <div>
+    <button onclick="adminLogin()">Admin Login</button>
+    <button onclick="addSlot()">Add Slot '9AM'</button>
+    <button onclick="bookSlot()">Client Book Slot</button>
+    <button onclick="loadData()">Load</button>
+  </div>
+  
+  <div id="status">Status: Ready</div>
+  <div id="data"></div>
+
+  <script>
+    // REPLACE WITH YOUR FIREBASE CONFIG (Console → Project Settings → SDK)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "your-project.firebaseapp.com",
+      databaseURL: "https://your-project-default-rtdb.firebaseio.com",
+      projectId: "your-project",
+      storageBucket: "your-project.appspot.com",
+      messagingSenderId: "123",
+      appId: "your-app-id"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    
+    const refSchedule = db.ref('schedule');
+    const refBookings = db.ref('bookings');
+    
+    async function updateStatus(msg) {
+      document.getElementById('status').innerHTML = `Status: ${msg}`;
+    }
+    
+    async function loadData() {
+      updateStatus('Loading...');
+      const snapSchedule = await refSchedule.once('value');
+      const snapBookings = await refBookings.once('value');
+      const schedule = snapSchedule.val() || [];
+      const bookings = snapBookings.val() || {};
+      
+      document.getElementById('data').innerHTML = `
+        <h3>Schedule: ${JSON.stringify(schedule)}</h3>
+        <h3>Bookings: ${JSON.stringify(bookings)}</h3>
+      `;
+      updateStatus('Loaded from Firebase!');
+    }
+    
+    async function adminLogin() {
+      updateStatus('Admin logged in');
+    }
+    
+    async function addSlot() {
+      updateStatus('Adding...');
+      await refSchedule.push('9:00 AM');
+      await loadData();
+      updateStatus('Slot 9AM added to Firebase!');
+    }
+    
+    async function bookSlot() {
+      updateStatus('Booking...');
+      await refBookings.child('9:00 AM').set('John Doe');
+      await loadData();
+      updateStatus('Booked on Firebase!');
+    }
+    
+    loadData();
+  </script>
+</head>
+</body>
+</html>
